@@ -1,0 +1,31 @@
+# Operating System Files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Log.txt
+*.log
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*~
+
+# Local Development / Env Files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+dist/
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
