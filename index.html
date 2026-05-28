@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <title>Geometry Dash — Infinite Neon Runner</title>
+    <meta name="description" content="An infinite neon runner. Collect coins, unlock abilities and skins, beat achievements, and survive forever!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="game-container">
+    <div class="bg-layer bg-layer-1"></div>
+    <div class="bg-layer bg-layer-2"></div>
+    <div class="bg-layer bg-layer-3"></div>
+
+    <!-- ===== MAIN MENU ===== -->
+    <div id="main-menu" class="screen active">
+        <div class="menu-content">
+            <div class="logo-container">
+                <h1 class="game-title">
+                    <span class="title-geo">GEOMETRY</span>
+                    <span class="title-dash">DASH</span>
+                </h1>
+                <div class="title-subtitle">INFINITE NEON RUNNER</div>
+            </div>
+            <div class="menu-stats-bar">
+                <div class="menu-stat-item">
+                    <span class="menu-stat-label">BEST RUN</span>
+                    <span id="menu-best-dist" class="menu-stat-value">—</span>
+                </div>
+                <div class="menu-coins-display">
+                    <span class="coin-symbol">★</span>
+                    <span id="menu-total-coins" class="menu-coins-value">0</span>
+                </div>
+            </div>
+            <div class="menu-buttons">
+                <button id="play-btn" class="menu-btn primary-btn">
+                    <span class="btn-icon">▶</span><span>PLAY</span>
+                </button>
+                <div class="menu-btn-row">
+                    <button id="shop-btn" class="menu-btn shop-btn">
+                        <span class="btn-icon">🛒</span><span>SHOP</span>
+                    </button>
+                    <button id="stats-btn" class="menu-btn stats-btn">
+                        <span class="btn-icon">📊</span><span>STATS</span>
+                    </button>
+                </div>
+                <div class="menu-btn-row">
+                    <button id="achievements-btn" class="menu-btn achieve-btn">
+                        <span class="btn-icon">🏆</span><span>ACHIEVEMENTS</span>
+                    </button>
+                    <button id="settings-btn" class="menu-btn settings-btn">
+                        <span class="btn-icon">⚙</span><span>SETTINGS</span>
+                    </button>
+                </div>
+                <button id="how-to-btn" class="menu-btn secondary-btn" style="min-width:200px;padding:12px 32px;font-size:0.9rem;">
+                    <span class="btn-icon">?</span><span>HOW TO PLAY</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HOW TO PLAY ===== -->
+    <div id="how-to-screen" class="screen">
+        <div class="how-to-content">
+            <h2>HOW TO PLAY</h2>
+            <div class="instructions">
+                <div class="instruction-item"><div class="key-icon">SPACE</div><p>Jump / Double Jump</p></div>
+                <div class="instruction-item"><div class="key-icon">↑</div><p>Arrow Up also works</p></div>
+                <div class="instruction-item"><div class="key-icon">CLICK</div><p>Tap / click to jump</p></div>
+                <div class="instruction-item"><div class="key-icon">S</div><p>Hold for Slow Motion</p></div>
+                <div class="instruction-item"><div class="key-icon">ESC</div><p>Pause the game</p></div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">⭐</span>
+                <p>Collect <strong>★ coins</strong> and grab glowing <strong>power rings</strong> for temporary boosts!</p>
+            </div>
+            <div class="tip-box tip-box--gold">
+                <span class="tip-icon">🏆</span>
+                <p>Unlock <strong>Achievements</strong> for bonus coins. Buy <strong>Skins</strong> and <strong>Trails</strong> in the Shop!</p>
+            </div>
+            <button id="back-btn" class="menu-btn secondary-btn"><span class="btn-icon">←</span><span>BACK</span></button>
+        </div>
+    </div>
+
+    <!-- ===== SHOP SCREEN ===== -->
+    <div id="shop-screen" class="screen shop-screen">
+        <div class="shop-content">
+            <div class="shop-header">
+                <button id="shop-back-btn" class="menu-btn secondary-btn shop-back-btn"><span class="btn-icon">←</span><span>BACK</span></button>
+                <h2 class="shop-title">SHOP</h2>
+                <div class="shop-coins-total"><span class="coin-symbol">★</span><span id="shop-total-coins">0</span></div>
+            </div>
+            <div class="shop-tabs">
+                <button class="shop-tab active" data-tab="abilities">ABILITIES</button>
+                <button class="shop-tab" data-tab="upgrades">UPGRADES</button>
+                <button class="shop-tab" data-tab="skins">SKINS</button>
+                <button class="shop-tab" data-tab="trails">TRAILS</button>
+            </div>
+            <div id="shop-grid" class="ability-grid"></div>
+        </div>
+    </div>
+
+    <!-- ===== ACHIEVEMENTS SCREEN ===== -->
+    <div id="achievements-screen" class="screen shop-screen">
+        <div class="shop-content">
+            <div class="shop-header">
+                <button id="achieve-back-btn" class="menu-btn secondary-btn shop-back-btn"><span class="btn-icon">←</span><span>BACK</span></button>
+                <h2 class="shop-title" style="color:#ffee00;">ACHIEVEMENTS</h2>
+                <div class="shop-coins-total"><span id="achieve-done">0</span><span style="color:var(--text-secondary);font-size:1rem;">/10</span></div>
+            </div>
+            <div id="achieve-grid" class="achieve-grid"></div>
+        </div>
+    </div>
+
+    <!-- ===== STATS SCREEN ===== -->
+    <div id="stats-screen" class="screen shop-screen">
+        <div class="shop-content">
+            <div class="shop-header">
+                <button id="stats-back-btn" class="menu-btn secondary-btn shop-back-btn"><span class="btn-icon">←</span><span>BACK</span></button>
+                <h2 class="shop-title" style="color:#cc00ff;">STATISTICS</h2>
+                <div></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-card-value" id="st-best">0m</div><div class="stat-card-label">Best Run</div></div>
+                <div class="stat-card"><div class="stat-card-value" id="st-total-dist">0m</div><div class="stat-card-label">Total Distance</div></div>
+                <div class="stat-card"><div class="stat-card-value" id="st-runs">0</div><div class="stat-card-label">Total Runs</div></div>
+                <div class="stat-card"><div class="stat-card-value" id="st-coins">0</div><div class="stat-card-label">Coins Earned</div></div>
+                <div class="stat-card"><div class="stat-card-value" id="st-streak">0</div><div class="stat-card-label">Best Streak</div></div>
+                <div class="stat-card"><div class="stat-card-value" id="st-achievements">0/10</div><div class="stat-card-label">Achievements</div></div>
+            </div>
+            <div class="history-section">
+                <h3 class="history-title">LAST 8 RUNS</h3>
+                <div class="history-chart" id="history-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SETTINGS SCREEN ===== -->
+    <div id="settings-screen" class="screen shop-screen">
+        <div class="shop-content">
+            <div class="shop-header">
+                <button id="settings-back-btn" class="menu-btn secondary-btn shop-back-btn"><span class="btn-icon">←</span><span>BACK</span></button>
+                <h2 class="shop-title" style="color:#aaaaff;">SETTINGS</h2>
+                <div></div>
+            </div>
+            <div class="settings-list">
+                <div class="setting-row">
+                    <div class="setting-info"><div class="setting-name">🔊 Music Volume</div></div>
+                    <div class="setting-control">
+                        <input type="range" id="music-vol" min="0" max="100" value="50" class="vol-slider">
+                        <span id="music-vol-label" class="vol-label">50%</span>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info"><div class="setting-name">🔔 SFX Volume</div></div>
+                    <div class="setting-control">
+                        <input type="range" id="sfx-vol" min="0" max="100" value="80" class="vol-slider">
+                        <span id="sfx-vol-label" class="vol-label">80%</span>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">♻️ Auto-Retry</div>
+                        <div class="setting-desc">Restart automatically after 3s on death</div>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="auto-retry-toggle"><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">💥 Screen Shake</div>
+                        <div class="setting-desc">Camera shake on death and damage</div>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="shake-toggle" checked><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">🎨 High Contrast</div>
+                        <div class="setting-desc">Larger, brighter obstacles</div>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="hc-toggle"><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <div class="setting-name">🗑️ Reset Progress</div>
+                        <div class="setting-desc">Wipe all coins, abilities, and records</div>
+                    </div>
+                    <button id="reset-btn" class="menu-btn secondary-btn" style="min-width:120px;padding:10px 20px;font-size:0.75rem;">RESET</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== GAME SCREEN ===== -->
+    <div id="game-screen" class="screen">
+        <canvas id="game-canvas"></canvas>
+        <div id="game-ui">
+            <div class="hud-left">
+                <div class="distance-hud">
+                    <span class="hud-label">DISTANCE</span>
+                    <span id="distance-text" class="hud-value">0m</span>
+                </div>
+                <div id="zone-badge" class="zone-badge zone-cyan">NEON CITY</div>
+            </div>
+            <div class="hud-right">
+                <div id="coin-counter-hud">
+                    <span class="coin-hud-icon" id="coin-hud-icon">★</span>
+                    <span id="run-coin-count">0</span>
+                </div>
+                <div id="attempt-counter">
+                    <span class="label">RUN</span>
+                    <span id="attempt-number">1</span>
+                </div>
+            </div>
+        </div>
+        <!-- Ability pills -->
+        <div id="ability-hud">
+            <div id="shield-pill"     class="ability-pill">🛡 SHIELD</div>
+            <div id="ghost-pill"      class="ability-pill">👻 ALIVE</div>
+            <div id="slowmo-pill"     class="ability-pill">⏳ SLOW <span class="slowmo-bar-wrap"><span id="slowmo-bar"></span></span></div>
+            <div id="doublejump-pill" class="ability-pill">⬆ ×<span id="dj-jumps">1</span></div>
+            <div id="coin2x-pill"     class="ability-pill">★ ×2</div>
+            <!-- Power-up rings active -->
+            <div id="star-pill"       class="ability-pill ring-star">⭐ STAR</div>
+            <div id="coinrush-pill"   class="ability-pill ring-coinrush">★ ×5 RUSH</div>
+            <div id="mini-pill"       class="ability-pill ring-mini">🔵 MINI</div>
+            <div id="speed-pill"      class="ability-pill ring-speed">🔴 SPEED</div>
+            <div id="gravity-pill"    class="ability-pill ring-gravity">🔄 GRAVITY</div>
+        </div>
+        <!-- Notifications -->
+        <div id="lucky-banner"    class="lucky-banner">🍀 LUCKY SHIELD!</div>
+        <div id="zone-flash"      class="zone-flash"></div>
+        <div id="zone-banner"     class="zone-banner"></div>
+        <div id="milestone-banner" class="milestone-banner">
+            <span id="milestone-icon">🏅</span>
+            <div class="milestone-text-group">
+                <span id="milestone-label">1KM!</span>
+                <span id="milestone-bonus-label">+50 ★</span>
+            </div>
+        </div>
+        <div id="achieve-toast" class="achieve-toast"></div>
+        <div id="auto-retry-bar" class="auto-retry-bar"><div id="auto-retry-fill"></div></div>
+    </div>
+
+    <!-- ===== PAUSE OVERLAY ===== -->
+    <div id="pause-screen" class="overlay">
+        <div class="overlay-content pause-content">
+            <h2 class="pause-title">PAUSED</h2>
+            <div class="pause-icon">⏸</div>
+            <div class="pause-info">
+                <span id="pause-dist-label" class="pause-stat">0m</span>
+                <span class="pause-stat-sep">·</span>
+                <span id="pause-coins-label" class="pause-stat">★ 0</span>
+            </div>
+            <div class="pause-buttons">
+                <button id="resume-btn" class="menu-btn primary-btn"><span class="btn-icon">▶</span><span>RESUME</span></button>
+                <button id="pause-shop-btn" class="menu-btn shop-btn" style="min-width:unset;"><span class="btn-icon">🛒</span><span>SHOP</span></button>
+                <button id="pause-menu-btn" class="menu-btn secondary-btn"><span class="btn-icon">☰</span><span>MENU</span></button>
+            </div>
+            <p class="pause-hint">Press <kbd>ESC</kbd> to resume</p>
+        </div>
+    </div>
+
+    <!-- ===== DEATH OVERLAY ===== -->
+    <div id="death-screen" class="overlay">
+        <div class="overlay-content">
+            <h2 class="death-title" id="death-title">CRASHED!</h2>
+            <div id="new-best-badge" class="new-best-badge" style="display:none;">🏅 NEW BEST!</div>
+            <div class="death-stats">
+                <div class="stat"><span class="stat-label">Distance</span><span id="death-distance" class="stat-value">0m</span></div>
+                <div class="stat"><span class="stat-label">Best</span><span id="death-best-dist" class="stat-value">0m</span></div>
+                <div class="stat"><span class="stat-label">Coins</span><span id="death-coins" class="stat-value stat-coins">+0</span></div>
+                <div class="stat"><span class="stat-label">Run #</span><span id="death-attempts" class="stat-value">1</span></div>
+            </div>
+            <div class="death-buttons">
+                <button id="retry-btn" class="menu-btn primary-btn"><span class="btn-icon">↻</span><span>RETRY</span></button>
+                <button id="menu-btn"  class="menu-btn secondary-btn"><span class="btn-icon">☰</span><span>MENU</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
